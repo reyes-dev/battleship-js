@@ -7,7 +7,5 @@ const Ship = (shipLength) => {
     return hits === shipLength;
   };
 
-  return { hit, isSunk };
+  return { shipLength, hit, isSunk };
 };
-
-export { Ship };

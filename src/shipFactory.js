@@ -9,3 +9,5 @@ const Ship = (shipLength) => {
 
   return { shipLength, hit, isSunk };
 };
+
+export { Ship };

@@ -15,6 +15,7 @@ test("should place object with length of 2 at correct coordinates", () => {
   expect(gameboard.board[0][0]).toBe(ship);
   expect(gameboard.board[1][0]).toBe(ship);
 });
+<<<<<<< HEAD
 
 test("should remove ship from correct coordinate", () => {
   const gameboard = Gameboard();
@@ -39,3 +40,5 @@ test("should call hit on correct ship", () => {
   gameboard.receiveAttack([0, 0]);
   expect(ship.isSunk()).toBe(true);
 });
+=======
+>>>>>>> bada9b9 (Build Gameboard placeShip method)

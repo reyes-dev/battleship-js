@@ -20,7 +20,8 @@ const Gameboard = () => {
   };
 
   const receiveAttack = (coordinate) => {
-    if (board[coordinate[0]][coordinate[1]] != 0) {
+    // If the passed coordinate lands on a ship
+    if (typeof board[coordinate[0]][coordinate[1]] === "object") {
       board[coordinate[0]][coordinate[1]].hit();
       board[coordinate[0]][coordinate[1]] = 1;
     } else {

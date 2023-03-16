@@ -21,7 +21,7 @@ test("should remove ship from correct coordinate", () => {
   const ship = Ship(1);
   gameboard.placeShip(ship, [0, 0]);
   gameboard.receiveAttack([0, 0]);
-  expect(gameboard.board[0][0]).toEqual(0);
+  expect(gameboard.board[0][0]).toEqual(1);
 });
 
 test("should return message of failure to sink ship", () => {

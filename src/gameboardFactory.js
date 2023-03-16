@@ -20,11 +20,12 @@ const Gameboard = () => {
   const receiveAttack = (coordinate) => {
     if (board[coordinate[0]][coordinate[1]] != 0) {
       board[coordinate[0]][coordinate[1]].hit();
-      board[coordinate[0]][coordinate[1]] = 0;
+      board[coordinate[0]][coordinate[1]] = 1;
     } else {
       return coordinate;
     }
   };
+
   return { board, placeShip, receiveAttack };
 };
 

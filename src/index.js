@@ -3,6 +3,7 @@ import { Gameboard } from "./gameboardFactory";
 import { Ship } from "./shipFactory";
 import { Computer } from "./computerFactory";
 import { Player } from "./playerFactory";
+import { displayController } from "./displayController";
 
 const Game = () => {
   const _setupShips = (board) => {
@@ -25,6 +26,8 @@ const Game = () => {
     const computerBoard = Gameboard();
     _setupShips(playerBoard);
     _setupShips(computerBoard);
+    displayController.renderPlayerBoard(playerBoard.board);
+    displayController.renderComputerBoard(computerBoard.board);
   };
   return { play };
 };

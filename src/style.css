@@ -1,4 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Electrolize', sans-serif;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rem;
+  background-color: #8d99ae;
+}
+h1 {
+  font-size: 6rem;
+  margin-top: 2rem;
+}
+button {
+  border-radius: 5px;
+  background-color: #003049;
+  color: #669bbc;
+  min-height: min-content;
+  font-size: 400%;
+}
+.w3r-dot {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rem;
+
+
+  width: 100vw;
+  height: 100vh;
+  background-color: 
+#ccc;
+  background-image: radial-gradient(#495867 10%, transparent 11%),
+    radial-gradient(#495867 10%, transparent 11%);
+  background-size: 10px 10px;
+  background-position: 0 0, 30px 30px;
+  background-repeat: repeat;
+}
+.boards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  gap: 12rem;
+}
+.boards > div {
+  height: 30rem;
+  width: 30rem;
+}
+.player, .computer {
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 1fr);
+}
+.rainbow_text_animated {
+  background: linear-gradient(to right, #edf2f4, #ef233c , #d90429, #669bbc, #003049);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow_animation 6s ease-in-out infinite;
+  background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+  0%,100% {
+      background-position: 0 0;
+  }
+
+  50% {
+      background-position: 100% 0;
+  }
 }

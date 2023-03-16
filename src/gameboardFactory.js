@@ -25,6 +25,7 @@ const Gameboard = () => {
       board[coordinate[0]][coordinate[1]].hit();
       board[coordinate[0]][coordinate[1]] = 1;
     } else {
+      board[coordinate[0]][coordinate[1]] = 2;
       return coordinate;
     }
   };

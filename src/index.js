@@ -23,11 +23,12 @@ const Game = () => {
     const player = Player();
     const computer = Computer();
     const playerBoard = Gameboard();
+    console.log(playerBoard);
     const computerBoard = Gameboard();
     _setupShips(playerBoard);
     _setupShips(computerBoard);
     displayController.renderPlayerBoard(playerBoard.board);
-    displayController.renderComputerBoard(computerBoard.board);
+    displayController.renderComputerBoard(computerBoard, player);
   };
   return { play };
 };

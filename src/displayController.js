@@ -19,13 +19,14 @@ const displayController = (() => {
       }
     }
   };
-  const renderComputerBoard = (board) => {
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
+  const renderComputerBoard = (board, player) => {
+    for (let i = 0; i < board.board.length; i++) {
+      for (let j = 0; j < board.board[i].length; j++) {
         let square = document.createElement("button");
         square.innerHTML = "~";
         square.addEventListener("click", function () {
-          _revealSquare(board, i, j, square);
+          _revealSquare(board.board, i, j, square);
+          player.attack(board, [i, j]);
         });
         computerBoard.appendChild(square);
       }

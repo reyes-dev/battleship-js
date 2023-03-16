@@ -39,3 +39,28 @@ test("should call hit on correct ship", () => {
   gameboard.receiveAttack([0, 0]);
   expect(ship.isSunk()).toBe(true);
 });
+
+test("should report whether all ships on the board are sunk", () => {
+  const gameboard = Gameboard();
+  const ship = Ship(1);
+  const destroyer = Ship(2);
+  gameboard.placeShip(ship, [0, 0]);
+  gameboard.placeShip(destroyer, [0, 3]);
+  expect(gameboard.allShipsSunk()).toBe(false);
+  gameboard.receiveAttack([0, 0]);
+  gameboard.receiveAttack([0, 3]);
+  gameboard.receiveAttack([1, 3]);
+  expect(gameboard.allShipsSunk()).toBe(true);
+});
+
+test("should return false if not all ships are sunk", () => {
+  const gameboard = Gameboard();
+  const ship = Ship(1);
+  const destroyer = Ship(2);
+  gameboard.placeShip(ship, [0, 0]);
+  gameboard.placeShip(destroyer, [0, 3]);
+  expect(gameboard.allShipsSunk()).toBe(false);
+  gameboard.receiveAttack([0, 0]);
+  gameboard.receiveAttack([0, 3]);
+  expect(gameboard.allShipsSunk()).toBe(false);
+});

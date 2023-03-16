@@ -1,8 +1,11 @@
-const Player = (num) => {
+const Player = (turn = true) => {
   const attack = (board, coordinate) => {
-    board.receiveAttack(coordinate);
+    if (turn) {
+      board.receiveAttack(coordinate);
+      turn = false;
+    }
   };
-  return { num, attack };
+  return { attack };
 };
 
 export { Player };

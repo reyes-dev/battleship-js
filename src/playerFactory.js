@@ -1,11 +1,10 @@
 const Player = (turn = true) => {
+  const getTurn = () => turn;
+  const setTurn = () => (turn ? (turn = false) : (turn = true));
   const attack = (board, coordinate) => {
-    if (turn) {
-      board.receiveAttack(coordinate);
-      turn = false;
-    }
+    board.receiveAttack(coordinate);
   };
-  return { attack };
+  return { attack, getTurn, setTurn };
 };
 
 export { Player };

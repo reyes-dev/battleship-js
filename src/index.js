@@ -19,17 +19,43 @@ const Game = () => {
     board.placeShip(battleship, [0, 6]);
     board.placeShip(carrier, [0, 8]);
   };
-  const play = () => {
+  function waitForPlayerInput(board) {
+    const promises = [];
+
+    for (let i = 0; i < board.length; i++) {
+      const promise = new Promise((resolve) => {
+        board[i].addEventListener("click", () => {
+          resolve();
+        });
+      });
+      promises.push(promise);
+    }
+    return Promise.any(promises);
+  }
+  async function play() {
     const player = Player();
     const computer = Computer();
     const playerBoard = Gameboard();
-    console.log(playerBoard);
     const computerBoard = Gameboard();
     _setupShips(playerBoard);
     _setupShips(computerBoard);
     displayController.renderPlayerBoard(playerBoard.board);
     displayController.renderComputerBoard(computerBoard, player);
-  };
+
+    while (!playerBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
+      if (player.getTurn()) {
+        await waitForPlayerInput(
+          document.querySelector(".computer").childNodes
+        );
+        player.setTurn();
+      } else {
+        computer.randomAttack(playerBoard);
+        displayController.renderPlayerBoard(playerBoard.board);
+        player.setTurn();
+      }
+    }
+    console.log("You won!");
+  }
   return { play };
 };
 

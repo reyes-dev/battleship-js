@@ -40,7 +40,14 @@ const Gameboard = () => {
     // Otherwise reach the return true statement
     return true;
   };
-  return { board, placeShip, receiveAttack, allShipsSunk };
+  const allShipsPlaced = (allShips) => {
+    if (allShips.length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  return { board, placeShip, receiveAttack, allShipsSunk, allShipsPlaced };
 };
 
 export { Gameboard };

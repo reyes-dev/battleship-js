@@ -6,18 +6,14 @@ import { Player } from "./playerFactory";
 import { displayController } from "./displayController";
 
 const Game = () => {
-  const _setupShips = (board) => {
+  const _setupShips = () => {
     const destroyer = Ship(2);
-    // const submarine = Ship(3);
-    // const cruiser = Ship(3);
-    // const battleship = Ship(4);
-    // const carrier = Ship(5);
+    const submarine = Ship(3);
+    const cruiser = Ship(3);
+    const battleship = Ship(4);
+    const carrier = Ship(5);
 
-    board.placeShip(destroyer, [0, 0]);
-    // board.placeShip(submarine, [0, 2]);
-    // board.placeShip(cruiser, [0, 4]);
-    // board.placeShip(battleship, [0, 6]);
-    // board.placeShip(carrier, [0, 8]);
+    return [destroyer, submarine, cruiser, battleship, carrier];
   };
   const _runCredits = (player, computer) => {
     if (player.allShipsSunk()) {
@@ -39,16 +35,33 @@ const Game = () => {
     }
     return Promise.any(promises);
   }
+  function waitForShipPlacement(gameboardButtons) {
+    const promises = [];
+
+    for (let i = 0; i < gameboardButtons.length; i++) {
+      const promise = new Promise((resolve) => {
+        gameboardButtons[i].addEventListener("click", () => {
+          resolve();
+        });
+      });
+      promises.push(promise);
+    }
+
+    return Promise.any(promises);
+  }
   async function play() {
     const player = Player();
     const computer = Computer();
     const playerBoard = Gameboard();
     const computerBoard = Gameboard();
-    _setupShips(playerBoard);
-    _setupShips(computerBoard);
-    displayController.renderPlayerBoard(playerBoard);
-    displayController.renderComputerBoard(computerBoard, player);
-
+    const allShips = _setupShips(playerBoard);
+    const allCompShips = _setupShips(computerBoard);
+    // displayController.renderPlayerBoard(playerBoard);
+    // displayController.renderComputerBoard(computerBoard, player);
+    while (!playerBoard.allShipsPlaced(allShips)) {
+      displayController.renderPlayerBoardPlacementPhase(playerBoard, allShips);
+      await waitForShipPlacement(document.querySelector(".player").childNodes);
+    }
     while (!playerBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
       if (player.getTurn()) {
         await waitForPlayerInput(

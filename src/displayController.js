@@ -15,31 +15,47 @@ const displayController = (() => {
       square.style.color = "red";
     }
   };
-  const _placeShipMouseoverEffect = (boardOfBtns, shipLength) => {
-    square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = "green";
-    });
-    square.addEventListener("mouseout", () => {
-      square.style.backgroundColor = "#003049";
+  // const _placeShipMouseoverEffect = (boardOfBtns, shipLength) => {
+  //   square.addEventListener("mouseover", () => {
+  //     square.style.backgroundColor = "green";
+  //   });
+  //   square.addEventListener("mouseout", () => {
+  //     square.style.backgroundColor = "#003049";
+  //   });
+  // };
+  const _placeShipOnBoard = (gameboard, square, coordinate, ships) => {
+    square.addEventListener("click", () => {
+      gameboard.placeShip(ships[0], coordinate);
+      ships.shift();
+      renderPlayerBoardPlacementPhase(gameboard, ships);
     });
   };
-  const _placeShipOnBoard = (gameboard, square, coordinate) => {
-    square.addEventListener("click", () => {
-      gameboard.placeShip(Ship(2), coordinate);
-      renderPlayerBoard(gameboard);
-      console.log(gameboard.board);
+  const _holdShipOverBoard = (gameboard, square, coordinate, ships) => {
+    square.addEventListener("mouseover", () => {
+      _placeShipOnBoard(gameboard, square, coordinate, ships);
     });
+  };
+  const renderPlayerBoardPlacementPhase = (gameboard, ships) => {
+    playerBoard.innerHTML = "";
+    for (let i = 0; i < gameboard.board.length; i++) {
+      for (let j = 0; j < gameboard.board[i].length; j++) {
+        let square = document.createElement("button");
+        _holdShipOverBoard(gameboard, square, [i, j], ships);
+        if (typeof gameboard.board[i][j] === "object") {
+          square.innerHTML = "#";
+        } else {
+          square.innerHTML = "~";
+        }
+        playerBoard.appendChild(square);
+      }
+    }
   };
   const renderPlayerBoard = (board) => {
     playerBoard.innerHTML = "";
     for (let i = 0; i < board.board.length; i++) {
       for (let j = 0; j < board.board[i].length; j++) {
         let square = document.createElement("button");
-        square.addEventListener("mouseover", () => {
-          console.log([i, j]);
-          _placeShipOnBoard(board, square, [i, j]);
-        });
-        // square.disabled = false;
+        square.disabled = false;
         if (board.board[i][j] === 1) {
           square.innerHTML = "#";
           square.style.color = "red";
@@ -100,7 +116,12 @@ const displayController = (() => {
     boardsContainer.appendChild(congratsMsg);
     boardsContainer.appendChild(replayBtn);
   };
-  return { renderPlayerBoard, renderComputerBoard, renderWinner };
+  return {
+    renderPlayerBoardPlacementPhase,
+    renderPlayerBoard,
+    renderComputerBoard,
+    renderWinner,
+  };
 })();
 
 export { displayController };

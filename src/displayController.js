@@ -1,6 +1,9 @@
+import { Game } from ".";
+
 const displayController = (() => {
-  const playerBoard = document.querySelector(".player");
-  const computerBoard = document.querySelector(".computer");
+  let playerBoard = document.querySelector(".player");
+  let computerBoard = document.querySelector(".computer");
+  const boardsContainer = document.querySelector(".boards");
   const _revealSquare = (board, coord1, coord2, square) => {
     square.disabled = true;
     if (board[coord1][coord2] === 0) {
@@ -53,7 +56,31 @@ const displayController = (() => {
       }
     }
   };
-  return { renderPlayerBoard, renderComputerBoard };
+  const renderWinner = (winner) => {
+    const congratsMsg = document.createElement("h2");
+    const replayBtn = document.createElement("button");
+    congratsMsg.innerHTML = `${winner} won! Congratulations!`;
+    replayBtn.innerHTML = "Play Again";
+    boardsContainer.innerHTML = "";
+    replayBtn.classList.add("replay-btn");
+    replayBtn.addEventListener("click", () => {
+      const boardsContainer = document.querySelector(".boards");
+      const playerDiv = document.createElement("div");
+      playerDiv.classList.add("player");
+      const computerDiv = document.createElement("div");
+      computerDiv.classList.add("computer");
+      boardsContainer.appendChild(playerDiv);
+      boardsContainer.appendChild(computerDiv);
+      playerBoard = document.querySelector(".player");
+      computerBoard = document.querySelector(".computer");
+      boardsContainer.removeChild(congratsMsg);
+      boardsContainer.removeChild(replayBtn);
+      Game().play();
+    });
+    boardsContainer.appendChild(congratsMsg);
+    boardsContainer.appendChild(replayBtn);
+  };
+  return { renderPlayerBoard, renderComputerBoard, renderWinner };
 })();
 
 export { displayController };

@@ -19,6 +19,13 @@ const Game = () => {
     board.placeShip(battleship, [0, 6]);
     board.placeShip(carrier, [0, 8]);
   };
+  const _runCredits = (player, computer) => {
+    if (player.allShipsSunk()) {
+      displayController.renderWinner("Computer");
+    } else if (computer.allShipsSunk()) {
+      displayController.renderWinner("Human");
+    }
+  };
   function waitForPlayerInput(board) {
     const promises = [];
 
@@ -54,10 +61,13 @@ const Game = () => {
         player.setTurn();
       }
     }
-    console.log("You won!");
+
+    _runCredits(playerBoard, computerBoard);
   }
   return { play };
 };
 
 const newGame = Game();
 newGame.play();
+
+export { Game };

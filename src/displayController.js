@@ -25,7 +25,8 @@ const displayController = (() => {
   };
   const _placeShipOnBoard = (gameboard, square, coordinate) => {
     square.addEventListener("click", () => {
-      gameboard.placeShip(Ship(1), coordinate);
+      gameboard.placeShip(Ship(2), coordinate);
+      renderPlayerBoard(gameboard);
       console.log(gameboard.board);
     });
   };

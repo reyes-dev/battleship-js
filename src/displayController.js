@@ -1,4 +1,5 @@
 import { Game } from ".";
+import { Ship } from "./shipFactory";
 
 const displayController = (() => {
   let playerBoard = document.querySelector(".player");
@@ -14,19 +15,37 @@ const displayController = (() => {
       square.style.color = "red";
     }
   };
+  const _placeShipMouseoverEffect = (boardOfBtns, shipLength) => {
+    square.addEventListener("mouseover", () => {
+      square.style.backgroundColor = "green";
+    });
+    square.addEventListener("mouseout", () => {
+      square.style.backgroundColor = "#003049";
+    });
+  };
+  const _placeShipOnBoard = (gameboard, square, coordinate) => {
+    square.addEventListener("click", () => {
+      gameboard.placeShip(Ship(1), coordinate);
+      console.log(gameboard.board);
+    });
+  };
   const renderPlayerBoard = (board) => {
     playerBoard.innerHTML = "";
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
+    for (let i = 0; i < board.board.length; i++) {
+      for (let j = 0; j < board.board[i].length; j++) {
         let square = document.createElement("button");
-        square.disabled = true;
-        if (board[i][j] === 1) {
+        square.addEventListener("mouseover", () => {
+          console.log([i, j]);
+          _placeShipOnBoard(board, square, [i, j]);
+        });
+        // square.disabled = false;
+        if (board.board[i][j] === 1) {
           square.innerHTML = "#";
           square.style.color = "red";
-        } else if (board[i][j] === 2) {
+        } else if (board.board[i][j] === 2) {
           square.innerHTML = "v";
           square.style.color = "#DBF4A7";
-        } else if (typeof board[i][j] === "object") {
+        } else if (typeof board.board[i][j] === "object") {
           square.innerHTML = "#";
         } else {
           square.innerHTML = "~";

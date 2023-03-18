@@ -8,16 +8,16 @@ import { displayController } from "./displayController";
 const Game = () => {
   const _setupShips = (board) => {
     const destroyer = Ship(2);
-    const submarine = Ship(3);
-    const cruiser = Ship(3);
-    const battleship = Ship(4);
-    const carrier = Ship(5);
+    // const submarine = Ship(3);
+    // const cruiser = Ship(3);
+    // const battleship = Ship(4);
+    // const carrier = Ship(5);
 
     board.placeShip(destroyer, [0, 0]);
-    board.placeShip(submarine, [0, 2]);
-    board.placeShip(cruiser, [0, 4]);
-    board.placeShip(battleship, [0, 6]);
-    board.placeShip(carrier, [0, 8]);
+    // board.placeShip(submarine, [0, 2]);
+    // board.placeShip(cruiser, [0, 4]);
+    // board.placeShip(battleship, [0, 6]);
+    // board.placeShip(carrier, [0, 8]);
   };
   const _runCredits = (player, computer) => {
     if (player.allShipsSunk()) {
@@ -46,7 +46,7 @@ const Game = () => {
     const computerBoard = Gameboard();
     _setupShips(playerBoard);
     _setupShips(computerBoard);
-    displayController.renderPlayerBoard(playerBoard.board);
+    displayController.renderPlayerBoard(playerBoard);
     displayController.renderComputerBoard(computerBoard, player);
 
     while (!playerBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {

@@ -1,5 +1,4 @@
 import { Game } from ".";
-import { Ship } from "./shipFactory";
 
 const displayController = (() => {
   let playerBoard = document.querySelector(".player");
@@ -23,30 +22,25 @@ const displayController = (() => {
   //     square.style.backgroundColor = "#003049";
   //   });
   // };
-  const _placeShipOnBoard = (gameboard, square, coordinate, ships) => {
+  const _getCoordinate = (gameboard, square, coordinate) => {
     square.addEventListener("click", () => {
-      gameboard.placeShip(ships[0], coordinate);
-      ships.shift();
-      renderPlayerBoardPlacementPhase(gameboard, ships);
+      gameboard.placeShip(gameboard.shipyard[0], coordinate);
+      gameboard.afterPlacementShipyard.push(gameboard.shipyard.shift());
+      renderPlayerBoardPlacementPhase(gameboard);
     });
   };
-  const _holdShipOverBoard = (gameboard, square, coordinate, ships) => {
-    square.addEventListener("mouseover", () => {
-      _placeShipOnBoard(gameboard, square, coordinate, ships);
-    });
-  };
-  const renderPlayerBoardPlacementPhase = (gameboard, ships) => {
+  const renderPlayerBoardPlacementPhase = (gameboard) => {
     playerBoard.innerHTML = "";
     for (let i = 0; i < gameboard.board.length; i++) {
       for (let j = 0; j < gameboard.board[i].length; j++) {
         let square = document.createElement("button");
-        _holdShipOverBoard(gameboard, square, [i, j], ships);
         if (typeof gameboard.board[i][j] === "object") {
           square.innerHTML = "#";
         } else {
           square.innerHTML = "~";
         }
         playerBoard.appendChild(square);
+        _getCoordinate(gameboard, square, [i, j]);
       }
     }
   };

@@ -1,5 +1,6 @@
 const Gameboard = () => {
   const shipyard = [];
+  let afterPlacementShipyard = [];
   const _createBoard = () => {
     const board = [];
     for (let i = 0; i < 10; i++) {
@@ -13,7 +14,6 @@ const Gameboard = () => {
   const board = _createBoard();
 
   const placeShip = (ship, coordinate) => {
-    shipyard.push(ship);
     for (let i = 0; i < ship.shipLength; i++) {
       board[coordinate[0] + i][coordinate[1]] = ship;
     }
@@ -32,22 +32,22 @@ const Gameboard = () => {
 
   const allShipsSunk = () => {
     // Return early from loop with false if any ship is not sunk
-    for (let i = 0; i < shipyard.length; i++) {
-      if (!shipyard[i].isSunk()) {
+    for (let i = 0; i < afterPlacementShipyard.length; i++) {
+      if (!afterPlacementShipyard[i].isSunk()) {
         return false;
       }
     }
     // Otherwise reach the return true statement
     return true;
   };
-  const allShipsPlaced = (allShips) => {
-    if (allShips.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
+  return {
+    board,
+    shipyard,
+    afterPlacementShipyard,
+    placeShip,
+    receiveAttack,
+    allShipsSunk,
   };
-  return { board, placeShip, receiveAttack, allShipsSunk, allShipsPlaced };
 };
 
 export { Gameboard };

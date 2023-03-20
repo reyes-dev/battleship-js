@@ -58,6 +58,7 @@ const Game = () => {
     displayController.renderComputerBoard(computerBoard, player);
     while (!playerBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
       if (player.getTurn()) {
+        displayController.renderPlayerBoard(playerBoard);
         await waitForPlayerInput(
           document.querySelector(".computer").childNodes
         );

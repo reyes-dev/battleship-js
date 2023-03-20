@@ -49,7 +49,7 @@ const displayController = (() => {
     for (let i = 0; i < board.board.length; i++) {
       for (let j = 0; j < board.board[i].length; j++) {
         let square = document.createElement("button");
-        square.disabled = false;
+        square.disabled = true;
         if (board.board[i][j] === 1) {
           square.innerHTML = "#";
           square.style.color = "red";

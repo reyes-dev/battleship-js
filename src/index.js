@@ -53,8 +53,7 @@ const Game = () => {
       displayController.renderPlayerBoardPlacementPhase(playerBoard);
       await waitForPlayerInput(document.querySelector(".player").childNodes);
     }
-    computerBoard.afterPlacementShipyard.push(Ship(1));
-    computerBoard.placeShip(computerBoard.afterPlacementShipyard[0], [0, 0]);
+    computer.placeShipsRandomly(computerBoard);
     displayController.renderComputerBoard(computerBoard, player);
     while (!playerBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
       if (player.getTurn()) {

@@ -75,6 +75,8 @@ const displayController = (() => {
         } else if (board.board[i][j] === 2) {
           square.innerHTML = "v";
           square.disabled = true;
+        } else if (typeof board.board[i][j] === "object") {
+          square.innerHTML = "#";
         } else {
           square.innerHTML = "~";
         }

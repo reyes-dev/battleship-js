@@ -17,13 +17,6 @@ const displayController = (() => {
       square.style.color = "red";
     }
   };
-  // const removeListeners = (buttons) => {
-  //   for (let i = 0; i < buttons.length; i++) {
-  //     const newBtn = buttons[i].cloneNode(true);
-  //     buttons[i].parentNode.replaceChild(newBtn, buttons[i]);
-  //     console.log("testing...");
-  //   }
-  // };
   const _shipMouseoverVertical = (buttons, gameboard) => {
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener("mouseover", () => {
@@ -87,6 +80,21 @@ const displayController = (() => {
       renderPlayerBoardPlacementPhase(gameboard);
     });
   };
+
+  function waitForPlayerInput(board) {
+    const promises = [];
+
+    for (let i = 0; i < board.length; i++) {
+      const promise = new Promise((resolve) => {
+        board[i].addEventListener("click", () => {
+          resolve();
+        });
+      });
+      promises.push(promise);
+    }
+    return Promise.any(promises);
+  }
+
   const renderPlayerBoardPlacementPhase = (gameboard) => {
     playerBoard.innerHTML = "";
     for (let i = 0; i < gameboard.board.length; i++) {
@@ -177,7 +185,7 @@ const displayController = (() => {
     boardsContainer.appendChild(congratsMsg);
     boardsContainer.appendChild(replayBtn);
   };
-  function _setDirection(gameboard) {
+  async function _setDirection(gameboard) {
     if (direction) {
       direction = false;
       renderPlayerBoardPlacementPhase(gameboard);

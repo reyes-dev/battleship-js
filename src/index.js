@@ -51,7 +51,7 @@ const Game = () => {
         break;
       }
       displayController.renderPlayerBoardPlacementPhase(playerBoard);
-      await waitForPlayerInput(document.querySelector(".player").childNodes);
+      await waitForPlayerInput(document.getElementsByTagName("button"));
     }
     computer.placeShipsRandomly(computerBoard);
     displayController.renderComputerBoard(computerBoard, player);

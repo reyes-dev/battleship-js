@@ -6,6 +6,7 @@ const displayController = (() => {
   let directionBtn = document.querySelector(".direction");
   const boardsContainer = document.querySelector(".boards");
   let direction = false;
+  let called = true;
   const _revealSquare = (board, coord1, coord2, square) => {
     square.disabled = true;
     if (board[coord1][coord2] === 0) {
@@ -16,14 +17,69 @@ const displayController = (() => {
       square.style.color = "red";
     }
   };
-  // const _placeShipMouseoverEffect = (boardOfBtns, shipLength) => {
-  //   square.addEventListener("mouseover", () => {
-  //     square.style.backgroundColor = "green";
-  //   });
-  //   square.addEventListener("mouseout", () => {
-  //     square.style.backgroundColor = "#003049";
-  //   });
+  // const removeListeners = (buttons) => {
+  //   for (let i = 0; i < buttons.length; i++) {
+  //     const newBtn = buttons[i].cloneNode(true);
+  //     buttons[i].parentNode.replaceChild(newBtn, buttons[i]);
+  //     console.log("testing...");
+  //   }
   // };
+  const _shipMouseoverVertical = (buttons, gameboard) => {
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("mouseover", () => {
+        const indices = [];
+
+        for (let k = 0; k < gameboard.shipyard[0].shipLength; k++) {
+          indices.push(i + k * 10);
+        }
+
+        for (const index of indices) {
+          buttons[index].style.backgroundColor = "green";
+        }
+      });
+    }
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("mouseout", () => {
+        const indices = [];
+
+        for (let k = 0; k < gameboard.shipyard[0].shipLength; k++) {
+          indices.push(i + k * 10);
+        }
+
+        for (const index of indices) {
+          buttons[index].style.backgroundColor = "#003049";
+        }
+      });
+    }
+  };
+  const _shipMouseoverHorizontal = (buttons, gameboard) => {
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("mouseover", () => {
+        const indices = [];
+
+        for (let k = 0; k < gameboard.shipyard[0].shipLength; k++) {
+          indices.push(i + k);
+        }
+
+        for (const index of indices) {
+          buttons[index].style.backgroundColor = "green";
+        }
+      });
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("mouseout", () => {
+          const indices = [];
+
+          for (let k = 0; k < gameboard.shipyard[0].shipLength; k++) {
+            indices.push(i + k);
+          }
+
+          for (const index of indices) {
+            buttons[index].style.backgroundColor = "#003049";
+          }
+        });
+      }
+    }
+  };
   const _getCoordinate = (gameboard, square, coordinate) => {
     square.addEventListener("click", () => {
       gameboard.placeShip(gameboard.shipyard[0], coordinate, direction);
@@ -36,6 +92,7 @@ const displayController = (() => {
     for (let i = 0; i < gameboard.board.length; i++) {
       for (let j = 0; j < gameboard.board[i].length; j++) {
         let square = document.createElement("button");
+
         if (typeof gameboard.board[i][j] === "object") {
           square.innerHTML = "#";
         } else {
@@ -44,6 +101,12 @@ const displayController = (() => {
         playerBoard.appendChild(square);
         _getCoordinate(gameboard, square, [i, j]);
       }
+    }
+    const buttons = document.querySelectorAll(".player button");
+    if (direction) {
+      _shipMouseoverVertical(buttons, gameboard);
+    } else {
+      _shipMouseoverHorizontal(buttons, gameboard);
     }
   };
   const renderPlayerBoard = (board) => {
@@ -114,13 +177,18 @@ const displayController = (() => {
     boardsContainer.appendChild(congratsMsg);
     boardsContainer.appendChild(replayBtn);
   };
-  const setupDirectionBtn = () => {
+  function _setDirection(gameboard) {
+    if (direction) {
+      direction = false;
+      renderPlayerBoardPlacementPhase(gameboard);
+    } else {
+      direction = true;
+      renderPlayerBoardPlacementPhase(gameboard);
+    }
+  }
+  const setupDirectionBtn = (gameboard) => {
     directionBtn.addEventListener("click", () => {
-      if (direction === false) {
-        direction = true;
-      } else if (direction) {
-        direction = false;
-      }
+      _setDirection(gameboard);
     });
   };
   return {

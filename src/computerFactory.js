@@ -15,11 +15,37 @@ const Computer = () => {
     }
     return randomCoordinate;
   };
-  const _checkRandomCoordinateIfOccupied = (board, ship) => {
+  // Double check to make sure one ship does not override another
+  const _checkRandomCoordinateForShipContact = (
+    board,
+    ship,
+    coordinate,
+    randBool
+  ) => {
+    for (let i = 0; i < ship.shipLength; i++) {
+      if (randBool) {
+        if (typeof board[coordinate[0] + i][coordinate[1]] === "object") {
+          return true;
+        }
+      } else {
+        if (typeof board[coordinate[0]][coordinate[1] + i] === "object") {
+          return true;
+        }
+      }
+    }
+  };
+  const _checkRandomCoordinateIfOccupied = (board, ship, randBool) => {
     let randCoordinate = _generateRandomCoordinate();
     while (
       typeof board[randCoordinate[0]][randCoordinate[1]] === "object" ||
-      randCoordinate[0] + ship.shipLength >= 10
+      randCoordinate[0] + ship.shipLength > 10 ||
+      randCoordinate[1] + ship.shipLength > 10 ||
+      _checkRandomCoordinateForShipContact(
+        board,
+        ship,
+        randCoordinate,
+        randBool
+      )
     ) {
       randCoordinate = _generateRandomCoordinate();
     }
@@ -30,9 +56,13 @@ const Computer = () => {
   };
   const placeShipsRandomly = (board) => {
     board.shipyard.forEach((ship) => {
-      let randCoordinate = _checkRandomCoordinateIfOccupied(board.board, ship);
-      console.log(randCoordinate[0] + ship.shipLength);
-      board.placeShip(ship, randCoordinate);
+      const randBool = Math.random() > 0.5 ? true : false;
+      let randCoordinate = _checkRandomCoordinateIfOccupied(
+        board.board,
+        ship,
+        randBool
+      );
+      board.placeShip(ship, randCoordinate, randBool);
       board.afterPlacementShipyard.push(ship);
     });
   };

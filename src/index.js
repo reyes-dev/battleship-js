@@ -44,6 +44,7 @@ const Game = () => {
   async function play() {
     const playerShips = _setupShips(playerBoard);
     const computerShips = _setupShips(computerBoard);
+    displayController.setupDirectionBtn();
     displayController.renderPlayerBoardPlacementPhase(playerBoard);
 
     while (true) {

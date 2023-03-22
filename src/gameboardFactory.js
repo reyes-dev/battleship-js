@@ -13,9 +13,15 @@ const Gameboard = () => {
   };
   const board = _createBoard();
 
-  const placeShip = (ship, coordinate) => {
-    for (let i = 0; i < ship.shipLength; i++) {
-      board[coordinate[0] + i][coordinate[1]] = ship;
+  const placeShip = (ship, coordinate, direction) => {
+    if (direction) {
+      for (let i = 0; i < ship.shipLength; i++) {
+        board[coordinate[0] + i][coordinate[1]] = ship;
+      }
+    } else {
+      for (let i = 0; i < ship.shipLength; i++) {
+        board[coordinate[0]][coordinate[1] + i] = ship;
+      }
     }
   };
 

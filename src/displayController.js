@@ -3,7 +3,9 @@ import { Game } from ".";
 const displayController = (() => {
   let playerBoard = document.querySelector(".player");
   let computerBoard = document.querySelector(".computer");
+  let directionBtn = document.querySelector(".direction");
   const boardsContainer = document.querySelector(".boards");
+  let direction = false;
   const _revealSquare = (board, coord1, coord2, square) => {
     square.disabled = true;
     if (board[coord1][coord2] === 0) {
@@ -24,7 +26,7 @@ const displayController = (() => {
   // };
   const _getCoordinate = (gameboard, square, coordinate) => {
     square.addEventListener("click", () => {
-      gameboard.placeShip(gameboard.shipyard[0], coordinate);
+      gameboard.placeShip(gameboard.shipyard[0], coordinate, direction);
       gameboard.afterPlacementShipyard.push(gameboard.shipyard.shift());
       renderPlayerBoardPlacementPhase(gameboard);
     });
@@ -112,11 +114,21 @@ const displayController = (() => {
     boardsContainer.appendChild(congratsMsg);
     boardsContainer.appendChild(replayBtn);
   };
+  const setupDirectionBtn = () => {
+    directionBtn.addEventListener("click", () => {
+      if (direction === false) {
+        direction = true;
+      } else if (direction) {
+        direction = false;
+      }
+    });
+  };
   return {
     renderPlayerBoardPlacementPhase,
     renderPlayerBoard,
     renderComputerBoard,
     renderWinner,
+    setupDirectionBtn,
   };
 })();
 

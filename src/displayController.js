@@ -80,21 +80,6 @@ const displayController = (() => {
       renderPlayerBoardPlacementPhase(gameboard);
     });
   };
-
-  function waitForPlayerInput(board) {
-    const promises = [];
-
-    for (let i = 0; i < board.length; i++) {
-      const promise = new Promise((resolve) => {
-        board[i].addEventListener("click", () => {
-          resolve();
-        });
-      });
-      promises.push(promise);
-    }
-    return Promise.any(promises);
-  }
-
   const renderPlayerBoardPlacementPhase = (gameboard) => {
     playerBoard.innerHTML = "";
     for (let i = 0; i < gameboard.board.length; i++) {
@@ -185,7 +170,7 @@ const displayController = (() => {
     boardsContainer.appendChild(congratsMsg);
     boardsContainer.appendChild(replayBtn);
   };
-  async function _setDirection(gameboard) {
+  function _setDirection(gameboard) {
     if (direction) {
       direction = false;
       renderPlayerBoardPlacementPhase(gameboard);
@@ -195,9 +180,12 @@ const displayController = (() => {
     }
   }
   const setupDirectionBtn = (gameboard) => {
-    directionBtn.addEventListener("click", () => {
-      _setDirection(gameboard);
-    });
+    if (called) {
+      directionBtn.addEventListener("click", () => {
+        _setDirection(gameboard);
+      });
+      called = false;
+    }
   };
   return {
     renderPlayerBoardPlacementPhase,

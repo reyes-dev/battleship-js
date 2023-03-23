@@ -44,6 +44,7 @@ const Game = () => {
   async function play() {
     const playerShips = _setupShips(playerBoard);
     const computerShips = _setupShips(computerBoard);
+    document.querySelector(".direction").style.display = "block";
     displayController.setupDirectionBtn(playerBoard);
 
     while (true) {
@@ -56,6 +57,7 @@ const Game = () => {
     computer.placeShipsRandomly(computerBoard);
     displayController.renderComputerBoard(computerBoard, player);
     while (!playerBoard.allShipsSunk() && !computerBoard.allShipsSunk()) {
+      document.querySelector(".direction").style.display = "none";
       if (player.getTurn()) {
         displayController.renderPlayerBoard(playerBoard);
         await waitForPlayerInput(

@@ -68,6 +68,15 @@ button {
   animation: rainbow_animation 6s ease-in-out infinite;
   background-size: 400% 100%;
 }
+.direction {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 10px;
+  margin-left: 19%;
+}
+.hide {
+  display: none;
+}
 
 @keyframes rainbow_animation {
   0%,100% {

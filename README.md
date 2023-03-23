@@ -2,7 +2,7 @@
 
 This is my attempt at build Battleship, the classic board game. This was a JavaScript project intended mainly to practice TDD and modularization.
 
-Try it live here: (https://reyes-dev.github.io/battleship-js/)[Battleship-JS]
+Try it live here: [Battleship-JS](https://reyes-dev.github.io/battleship-js/)
 
 # How to Play
 

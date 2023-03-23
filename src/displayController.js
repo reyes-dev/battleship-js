@@ -73,7 +73,7 @@ const displayController = (() => {
       }
     }
   };
-  const _getCoordinate = (gameboard, square, coordinate) => {
+  const _placeShipListener = (gameboard, square, coordinate) => {
     square.addEventListener("click", () => {
       gameboard.placeShip(gameboard.shipyard[0], coordinate, direction);
       gameboard.afterPlacementShipyard.push(gameboard.shipyard.shift());
@@ -85,14 +85,13 @@ const displayController = (() => {
     for (let i = 0; i < gameboard.board.length; i++) {
       for (let j = 0; j < gameboard.board[i].length; j++) {
         let square = document.createElement("button");
-
         if (typeof gameboard.board[i][j] === "object") {
           square.innerHTML = "#";
         } else {
           square.innerHTML = "~";
         }
         playerBoard.appendChild(square);
-        _getCoordinate(gameboard, square, [i, j]);
+        _placeShipListener(gameboard, square, [i, j]);
       }
     }
     const buttons = document.querySelectorAll(".player button");
